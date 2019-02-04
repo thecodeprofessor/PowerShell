@@ -4,7 +4,7 @@
 .DESCRIPTION
   Several examples showing the basics of conditional statements and how to use them.
 .NOTES  
-File Name  : BasicssofVariables.ps1
+File Name  : BasicsofFunctions.ps1
 Author     : Nathan Abourbih - nathan@abourbih.com 
 #>
 

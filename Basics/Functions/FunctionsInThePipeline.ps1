@@ -13,23 +13,11 @@ Function Get-DirectorySizes {
     [CmdletBinding()]
 
     Param(
-        [parameter(
-            Mandatory,
-            ParameterSetName = 'path',
-            Position = 0,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName
-        )]
+        [parameter(Mandatory, ParameterSetName = 'path', Position = 0, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
         [SupportsWildcards()]
         [string[]]$path,
-     
-        [parameter(
-            Mandatory,
-            ParameterSetName = 'literalPath',
-            Position = 0,
-            ValueFromPipelineByPropertyName
-        )]
+        [parameter(Mandatory, ParameterSetName = 'literalPath', Position = 0, ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
         [Alias('PSPath')]
         [string[]]$literalPath
