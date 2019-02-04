@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  xpanding Strings and Literal Strings
+Expanding Strings and Literal Strings
 .DESCRIPTION
 Several examples of how to use strings in PowerShell.
 .NOTES  
@@ -16,5 +16,6 @@ Write-Host "Your friend's name is $firstName $lastName and their age is $age." #
 Write-Host 'Your friend''s name is $firstName $lastName and their age is $age.'
 
 Write-Host "The value of $(5+2) is 7."
+Write-Host "The value of `$(5+2) is 7."
 Write-Host 'The value of $(5+2) is 7.'
 

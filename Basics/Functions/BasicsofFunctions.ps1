@@ -4,10 +4,9 @@ Basics of Functions
 .DESCRIPTION
 Several examples showing the basics of functions and how to use them.
 .NOTES  
-File Name  : BasicssofVFunctions.ps1
+File Name  : BasicssofFunctions.ps1
 Author     : Nathan Abourbih - nathan@abourbih.com 
 #>
-
 function Get-Greeting
 { 
     return "Hello, sunshine!" 
