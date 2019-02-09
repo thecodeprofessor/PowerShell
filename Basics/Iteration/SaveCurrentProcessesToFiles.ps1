@@ -11,7 +11,7 @@ Author     : Nathan Abourbih - nathan@abourbih.com
 $computers = "localhost", "loopback", "127.0.0.1"
 
 foreach ($computer in $computers) {
-    $newFile = "C:\users\user\" + $computer + "_Processes.txt"
+    $newFile = "C:\users\user\desktop\" + $computer + "_Processes.txt" # Be sure to change this line. Change user to your own username.
     Write-Host "Testing" $computer "please wait ...";
     Get-WmiObject -computername $computer -class win32_process |
         Select-Object name, processID, Priority, ThreadCount 

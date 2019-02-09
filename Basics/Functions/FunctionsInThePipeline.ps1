@@ -64,7 +64,7 @@ Function Get-DirectorySizes {
     }
 }
 
-#Get-DirectorySizes -Path C:\Users\nate\desktop, C:\Users\nate\desktop
+#Get-DirectorySizes -Path C:\Users\nate\desktop, C:\Users\nate\downloads
 
 #Get-DirectorySizes -Path C:\Users\nate\downloads\*
 
@@ -72,4 +72,4 @@ Function Get-DirectorySizes {
 
 #Get-ChildItem "C:\Users\nate" -ErrorAction 0 | Get-DirectorySizes  
 
-#Get-ChildItem "C:\Users\nate\downloads" -ErrorAction 0 | Get-DirectorySizes  
+Get-ChildItem "C:\Users\nate\downloads" -ErrorAction 0 | Get-DirectorySizes  
