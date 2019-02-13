@@ -8,11 +8,6 @@ File Name  : ADAddUsers.ps1
 Author     : Nathan Abourbih - nathan@abourbih.com 
 #>
 
-Write-Host "Welcome to the Active Directory Add Users Script`n`n"
-
-#Write-Host "Would you like to import from a CSV or enter the names manually?`n"
-#$type = Read-Host "Enter c for csv, m for manual, or q to quit."
-
 Enum ResponseTypes {
     List
     PositiveInteger
