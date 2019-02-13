@@ -9,11 +9,19 @@ File Name  : CreatingArraysofObjects.ps1
 Author     : Nathan Abourbih - nathan@abourbih.com 
 #>
 
-function New-Person ($firstName, $lastName)
+function New-Person ($firstName, $lastName, $favoriteColour = $null)
 {
+    if ($null -eq $favoriteColour)
+    {
+        $favoriteColour = Get-FavoriteColour
+    }
+
     $person = [PSCustomObject]@{
         FirstName               = $firstName
         LastName               = $lastName
+        FavoriteColour          = $favoriteColour
+        EyeColour               = $null
+        Height                  = $null
     }
 
     return $person
@@ -44,13 +52,61 @@ function New-RandomPeople([int]$count = 1) {
     return $people
 }
 
-#Create a list of 10 random people.
-$people = New-RandomPeople 10
+function Get-FavoriteColour()
+{
+    $colour = @(
+        "Yellow",
+        "Blue",
+        "Red",
+        "Green",
+        "Orange",
+        "Purple",
+        "Brown"
+    )
 
-#Display the 10 random people on screen using Format-Table
+    return $colour | Get-Random
+}
+
+function Get-Height()
+{
+    #Simulate getting information from another source.
+    $height = Get-Random -Minimum 161 -Maximum 174
+
+    return $height
+}
+
+#Create a list of 10 random people.
+#$people = New-RandomPeople 10
+
+
+#Add one new person manually
+$people = @()
+$people += New-Person -firstName "John" -lastName "Smith" -favoriteColour "Aqua"
+$people += New-Person -firstName "Jane" -lastName "Doe"
+$people += New-Person -firstName "Frank" -lastName "Appleton"
+
+foreach ($person in $people) {
+    if ($person.FirstName -eq "John" -and $person.LastName -eq "Smith")
+    {
+        $person.EyeColour = "Brown"
+    } elseif ($person.FirstName -eq "Jane" -and $person.LastName -eq "Doe")
+    {
+        $person.EyeColour = "Blue"
+    } elseif ($person.FirstName -eq "Frank" -and $person.LastName -eq "Appleton")
+    {
+        $person.EyeColour = "Green"
+    }
+
+    $person.Height = Get-Height
+}
+
 $people | Format-Table
 
-#Display the 10 random people on screen using a foreach loop.
+
+#Display the people on screen using Format-Table
+$people | Format-Table
+
+#Display the people on screen using a foreach loop.
 #foreach ($person in $people) {
 #    Write-Host "$($person.FirstName) $($person.LastName)"
 #}
