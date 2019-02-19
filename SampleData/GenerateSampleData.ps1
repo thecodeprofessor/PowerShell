@@ -232,11 +232,11 @@ function New-SampleData([int]$maximum = 100, $path) {
 
                 if ($_.Name -eq "People" -or $_.Name -eq "Accounts")
                 {
-                    $html = $_.Value | Select-Object *, @{Expression={"<img src='../Pictures/$($_.picture)'>"};Name="Image"} | ConvertTo-Html
+                    $html = $_.Value | Select-Object *, @{Expression={"<img src='../Pictures/$($_.picture)'>"};Name="image"} | ConvertTo-Html
                     Add-Type -AssemblyName System.Web
                     [System.Web.HttpUtility]::HtmlDecode($html)| Out-File -FilePath "$path\Html\$($_.Name).html" -ErrorAction SilentlyContinue
                 }
-                else
+                elseif ($_.Name -eq "Addresses" -or $_.Name -eq "Coordinates")
                 {
                     $_.Value | ConvertTo-Html | Out-File -FilePath "$path\Html\$($_.Name).html" -ErrorAction SilentlyContinue
                 }
