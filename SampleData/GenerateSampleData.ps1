@@ -38,7 +38,6 @@ function Get-RandomUsers([int]$count = 1) {
     $body = @{
         nat      = 'us'
         results  = $count
-        password = 'special,upper,lower,10-16'
     }
 
     $randomUsers = Invoke-WebRequest -Uri 'https://randomuser.me/api/' -Body $body -Method Get | ConvertFrom-Json
@@ -196,12 +195,22 @@ function New-SampleData([int]$maximum = 100, $path) {
             if (!($_.Name -eq "Users"))
             {
                 $_.Value | ConvertTo-Csv | Out-File -FilePath "$path\Csv\$($_.Name).csv" -ErrorAction SilentlyContinue
-                $_.Value | ConvertTo-Html | Out-File -FilePath "$path\Html\$($_.Name).html" -ErrorAction SilentlyContinue
                 $_.Value | Format-Table | Out-File -FilePath "$path\Text\$($_.Name).txt" -ErrorAction SilentlyContinue
+
+                if ($_.Name -eq "People" -or $_.Name -eq "Accounts")
+                {
+                    $html = $_.Value | Select-Object *, @{Expression={"<img src='../Pictures/$($_.picture)'>"};Name="Image"} | ConvertTo-Html
+                    Add-Type -AssemblyName System.Web
+                    [System.Web.HttpUtility]::HtmlDecode($html)| Out-File -FilePath "$path\Html\$($_.Name).html" -ErrorAction SilentlyContinue
+                }
+                else
+                {
+                    $_.Value | ConvertTo-Html | Out-File -FilePath "$path\Html\$($_.Name).html" -ErrorAction SilentlyContinue
+                }
             }
         }
     }
-
+    
     for ($i = 0; $i -lt $randomDocuments.Count; $i++) {
         $filename = ([string]($i + 1)).PadLeft(2,'0')
         $randomDocuments[$i].content | Format-Table | Out-File -FilePath "$path\Paragraphs\Sample$filename.txt" -ErrorAction SilentlyContinue
