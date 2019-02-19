@@ -45,6 +45,11 @@ function Get-RandomUsers([int]$count = 1) {
     return $randomUsers.results
 }
 
+function Get-RandomItem ([string[]] $items)
+{ 
+    return [string]($items | Get-Random)
+}
+
 function New-SampleData([int]$maximum = 100, $path) {
     New-Item -Path "$path\Json\" -ItemType Directory -ErrorAction 0 | Out-Null
     New-Item -Path "$path\Csv\" -ItemType Directory -ErrorAction 0 | Out-Null
@@ -75,6 +80,7 @@ function New-SampleData([int]$maximum = 100, $path) {
     $emails = @()
     $strings = @()
     $numbers = @()
+    $computers = @()
 
     $counter = 1
 
@@ -88,7 +94,7 @@ function New-SampleData([int]$maximum = 100, $path) {
             $webClient.DownloadFile($randomUser.picture.medium, "$path\Pictures\$pictureFilename")
         }
 
-        [int]$randomNumber = Get-Random -Minimum 1 -Maximum 10
+        [int]$randomNumber = Get-Random -Minimum 1 -Maximum 11
 
         $title = ((Get-Culture).TextInfo).ToTitleCase($randomUser.name.title)
         $firstName = ((Get-Culture).TextInfo).ToTitleCase($randomUser.name.first)
@@ -172,6 +178,32 @@ function New-SampleData([int]$maximum = 100, $path) {
                     $numbers += $counter
                 }
             }
+            10 { 
+                if ($computers.Length -lt $maximum) {
+                    if ($computers.Length -lt 3)
+                    {
+                        $computer = $randomUser.location.city.Substring(0,2).ToUpper()
+                    }
+                    else {
+                        $computer = (Get-RandomItem $computers).Substring(0,2).ToUpper()
+                    }
+
+                    $computer += "-"
+
+                    if ((@($computers) -like "$($computer)SRV*").Count -gt 0)
+                    {
+                        $computer += "WKS"
+                    }
+                    else {
+                        $computer += "SRV"
+                    }
+
+                    $computer += "-"
+                    $computer += ($counter).ToString().PadLeft(3,'0')
+
+                    $computers += $computer
+                }
+            }
             Default {}
         }
         $counter++
@@ -187,6 +219,7 @@ function New-SampleData([int]$maximum = 100, $path) {
         Emails      = $emails
         Strings     = $strings
         Numbers     = $numbers
+        Computers   = $computers
     }
 
     foreach ($list in $lists) {
