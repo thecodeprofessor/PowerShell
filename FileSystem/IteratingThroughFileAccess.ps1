@@ -8,7 +8,9 @@ File Name  : IteratingThroughFileAccess.ps1
 Author     : Nathan Abourbih - nathan@abourbih.com 
 #>
 
-$allFilesAndFolders = Get-ChildItem "C:\Users\nate\Downloads" #Get a list of all files and folders. Be sure to replace this with a valid path.
+$filesandFoldersWithGuestFullAccess = @()
+
+$allFilesAndFolders = Get-ChildItem "C:\Users\nate\Downloads" -Recurse #Get a list of all files and folders. Be sure to replace this with a valid path.
 
 foreach ($item in $allFilesAndFolders)
 {
@@ -27,7 +29,7 @@ foreach ($item in $allFilesAndFolders)
     {
         #$itemAccessEntry is possibly one of many users or groups that have an access entry for the current file or folder.
 
-        if ($itemAccessEntry.IdentityReference -match 'guest' -and $itemAccessEntry.FileSystemRights -match 'fullcontrol')
+        if ($itemAccessEntry.IdentityReference -match 'guest' -and $itemAccessEntry.FileSystemRights -match 'fullcontrol' -and $itemAccessEntry.AccessControlType -match 'allow')
         {
             #Do something if the current access entry is for a user with guest in their name and they have Full Control.
             
@@ -40,5 +42,9 @@ foreach ($item in $allFilesAndFolders)
     if ($guestHasFullControl)
     {
         Write-Host "`t`t`t IMPORTANT: A guest user has full control!" -ForegroundColor Red
+        $filesandFoldersWithGuestFullAccess += $item
     }
 }
+
+Write-Host "`n`n`nAll files and folders where a guest user has full control:"
+$filesandFoldersWithGuestFullAccess | Select-Object -Property FullName, Name, Mode, LastWriteTime | Format-Table
