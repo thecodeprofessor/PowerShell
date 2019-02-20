@@ -11,8 +11,8 @@ Author     : Nathan Abourbih - nathan@abourbih.com
 function Get-Menu {
     Write-Host "`nPlease choose one of the following options:" -ForegroundColor Green
     Write-Host "1) Display a list of files and folders."
-    Write-Host "2) Display information about my computer.`n"
-    Write-Host "3) Tell me a joke."
+    Write-Host "2) Display information about my computer."
+    Write-Host "3) Tell me a joke.`n"
 
     $selection = Read-Host "Type 1, 2, 3, or q to quit."
 
